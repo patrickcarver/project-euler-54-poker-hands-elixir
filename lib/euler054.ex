@@ -1,18 +1,7 @@
 defmodule Euler054 do
-  @moduledoc """
-  Documentation for Euler054.
-  """
+  alias Euler054.PokerParser
 
-  @doc """
-  Hello world.
-
-  ## Examples
-
-      iex> Euler054.hello
-      :world
-
-  """
-  def hello do
-    :world
+  def start do
+    PokerParser.start("poker.txt")  
   end
 end
