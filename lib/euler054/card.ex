@@ -11,6 +11,32 @@ defmodule Euler054.Card do
     end
 
     defp create_struct({value, suit}) do
-        %Card{value: String.to_integer(value), suit: suit}
+        cleaned_value = clean_value(value)
+
+        %Card{value: cleaned_value, suit: suit}
+    end
+
+    defp clean_value("T") do
+        10        
+    end
+
+    defp clean_value("J") do
+        11
+    end
+
+    defp clean_value("Q") do
+        12
+    end
+
+    defp clean_value("K") do
+        13
+    end
+
+    defp clean_value("A") do
+        14
+    end
+
+    defp clean_value(value) do
+        String.to_integer(value)    
     end
 end
