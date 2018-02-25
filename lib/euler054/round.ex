@@ -3,8 +3,10 @@ defmodule Euler054.Round do
     alias Euler054.Card
 
     def create_from_text(text) do
-        player1 = create_hand(Enum.slice(text, 0, 5))
-        player2 = create_hand(Enum.slice(text, 5, 5))
+        {player1, player2} = Enum.split(text, 5)
+
+       # player1 = create_hand(Enum.slice(text, 0, 5))
+       # player2 = create_hand(Enum.slice(text, 5, 5))
 
         player1
     end
