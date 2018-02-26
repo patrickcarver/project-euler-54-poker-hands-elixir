@@ -43,21 +43,30 @@ defmodule Euler054.Hand do
             :false -> hand_value
           end
 
-        is_a_royal_flush = is_a_straight_flush && (card_values == 10..14)
+        is_a_royal_flush = is_a_straight_flush && is_straight_for_royal_flush(card_values)
 
         hand_value =
           case is_a_royal_flush do
             :true -> 10
             :false -> hand_value
           end
+
+        hand_value
     end
 
     defp is_straight(values) do
-        values == List.first(values)..List.last(values)
+        ranged_list = List.first(values)..List.last(values) 
+                      |> Enum.to_list
+        
+        values == ranged_list
     end
 
     defp is_flush(suits) do
         length(suits) == 1
+    end
+
+    defp is_straight_for_royal_flush(card_values) do
+      card_values == Enum.to_list(10..14)
     end
 
     defp get_suit_values(cards) do
@@ -66,7 +75,8 @@ defmodule Euler054.Hand do
     end
 
     defp get_card_values(cards) do
-        Enum.map(cards, &(&1.value))
+        Enum.map(cards, &(&1.value)) 
+        |> Enum.sort
     end
 
 
