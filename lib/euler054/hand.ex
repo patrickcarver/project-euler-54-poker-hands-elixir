@@ -20,38 +20,50 @@ defmodule Euler054.Hand do
         suit_values = get_suit_values(cards)
 
         is_a_straight = is_straight(card_values)
-        
-        hand_value = 
-          case is_a_straight do
-            :true -> 5
-            :false -> hand_value
-          end
+        hand_value = get_value_if_straight(hand_value, is_a_straight)
 
         is_a_flush = is_flush(suit_values)
-
-        hand_value =
-          case is_a_flush do
-            :true -> 6
-            :false -> hand_value
-          end
+        hand_value = get_value_if_flush(hand_value, is_a_flush)
 
         is_a_straight_flush = is_a_straight && is_a_flush
-
-        hand_value =
-          case is_a_straight_flush do
-            :true -> 9
-            :false -> hand_value
-          end
+        hand_value = get_value_if_straight_flush(hand_value, is_a_straight_flush)  
 
         is_a_royal_flush = is_a_straight_flush && is_straight_for_royal_flush(card_values)
-
-        hand_value =
-          case is_a_royal_flush do
-            :true -> 10
-            :false -> hand_value
-          end
+        hand_value = get_value_if_royal_flush(hand_value, is_a_royal_flush)
 
         hand_value
+    end
+
+    defp get_value_if_straight(hand_value, :false) do
+      hand_value 
+    end
+
+    defp get_value_if_straight(_, :true) do
+      5   
+    end
+
+    defp get_value_if_flush(hand_value, :false) do
+      hand_value
+    end
+
+    defp get_value_if_flush(_, :true) do
+      6
+    end    
+
+    defp get_value_if_straight_flush(hand_value, :false) do
+      hand_value
+    end
+
+    defp get_value_if_straight_flush(_, :true) do
+      9
+    end    
+
+    defp get_value_if_royal_flush(hand_value, :false) do
+      hand_value
+    end
+
+    defp get_value_if_royal_flush(_, :true) do
+      10
     end
 
     defp is_straight(values) do
