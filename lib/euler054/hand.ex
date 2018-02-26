@@ -1,5 +1,4 @@
 defmodule Euler054.Hand do
-    alias Euler054.Card
 
   #  @ranks: [
   #      {rank: 1, label: :high_card},
@@ -15,24 +14,55 @@ defmodule Euler054.Hand do
   #  ]
 
     def get_value(cards) do
-        cards
+        hand_value = nil
 
-        is_a_straight = is_straight(cards)
-        is_a_flush = is_flush(cards)
+        card_values = get_card_values(cards)
+        suit_values = get_suit_values(cards)
 
+        is_a_straight = is_straight(card_values)
+        
+        hand_value = 
+          case is_a_straight do
+            :true -> 5
+            :false -> hand_value
+          end
+
+        is_a_flush = is_flush(suit_values)
+
+        hand_value =
+          case is_a_flush do
+            :true -> 6
+            :false -> hand_value
+          end
+
+        is_a_straight_flush = is_a_straight && is_a_flush
+
+        hand_value =
+          case is_a_straight_flush do
+            :true -> 9
+            :false -> hand_value
+          end
+
+        is_a_royal_flush = is_a_straight_flush && (card_values == 10..14)
+
+        hand_value =
+          case is_a_royal_flush do
+            :true -> 10
+            :false -> hand_value
+          end
     end
 
-    defp is_straight(cards) do
-        values = get_card_values(cards)
-        range_to_check = values.first..values.last
-        values == range_to_check
+    defp is_straight(values) do
+        values == List.first(values)..List.last(values)
     end
 
-    defp is_flush(cards) do
-        suits = Enum.map(cards, &(&1.suit)) 
-                |> Enum.uniq
-
+    defp is_flush(suits) do
         length(suits) == 1
+    end
+
+    defp get_suit_values(cards) do
+        Enum.map(cards, &(&1.suit)) 
+        |> Enum.uniq
     end
 
     defp get_card_values(cards) do
