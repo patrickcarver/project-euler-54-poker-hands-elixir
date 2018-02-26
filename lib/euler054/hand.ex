@@ -14,24 +14,75 @@ defmodule Euler054.Hand do
   #  ]
 
     def get_value(cards) do
-        hand_value = nil
+      hand = cards
+             |> get_init_map
+             |> check_if_straight
+             |> check_if_flush
+             |> check_if_straight_flush
+             |> check_if_royal_flush
 
-        card_values = get_card_values(cards)
-        suit_values = get_suit_values(cards)
+      hand.value
+    end
 
-        is_a_straight = is_straight(card_values)
-        hand_value = get_value_if_straight(hand_value, is_a_straight)
+    defp get_init_map(cards) do
+      %{
+        value: nil, 
+        card_values: get_card_values(cards), 
+        suit_values: get_suit_values(cards),
+        is_straight: nil,
+        is_flush: nil  
+      }      
+    end
 
-        is_a_flush = is_flush(suit_values)
-        hand_value = get_value_if_flush(hand_value, is_a_flush)
+    defp check_if_straight(data) do
+      is_a_straight = is_straight(data.card_values)
+      value = get_value_if_straight(data.value, is_a_straight)
 
-        is_a_straight_flush = is_a_straight && is_a_flush
-        hand_value = get_value_if_straight_flush(hand_value, is_a_straight_flush)  
+      %{ data | is_straight: is_a_straight, value: value }          
+    end
 
-        is_a_royal_flush = is_a_straight_flush && is_straight_for_royal_flush(card_values)
-        hand_value = get_value_if_royal_flush(hand_value, is_a_royal_flush)
+    defp check_if_flush(data) do
+      is_a_flush = is_flush(data.suit_values)
+      value = get_value_if_flush(data.value, is_a_flush)
 
-        hand_value
+      %{ data | is_flush: is_a_flush, value: value }  
+    end
+
+    defp check_if_straight_flush(data = %{is_straight: true, is_flush: true}) do
+      %{ 
+        value: 9, 
+        is_straight_flush: true, 
+        card_values: data.card_values,
+        suit_values: data.suit_values 
+      }
+    end
+
+    defp check_if_straight_flush(data = %{is_straight: _, is_flush: _}) do
+      %{
+        value: data.value,
+        is_straight_flush: false,
+        card_values: data.card_values,
+        suit_values: data.suit_values
+      }  
+    end
+
+    defp check_if_royal_flush(data = %{is_straight_flush: true}) do
+      is_a_royal_flush = is_straight_for_royal_flush(data.card_values)
+      value = get_value_if_royal_flush(data.value, is_a_royal_flush)
+
+      %{ 
+        value: value, 
+        card_values: data.card_values,
+        suit_values: data.suit_values, 
+      }        
+    end
+
+    defp check_if_royal_flush(data = %{is_straight_flush: false}) do
+      %{
+        value: data.value,
+        card_values: data.card_values,
+        suit_values: data.suit_values
+      }
     end
 
     defp get_value_if_straight(hand_value, :false) do
@@ -48,14 +99,6 @@ defmodule Euler054.Hand do
 
     defp get_value_if_flush(_, :true) do
       6
-    end    
-
-    defp get_value_if_straight_flush(hand_value, :false) do
-      hand_value
-    end
-
-    defp get_value_if_straight_flush(_, :true) do
-      9
     end    
 
     defp get_value_if_royal_flush(hand_value, :false) do
