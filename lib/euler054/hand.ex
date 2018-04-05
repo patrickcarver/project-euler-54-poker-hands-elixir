@@ -133,8 +133,6 @@ defmodule Euler054.Hand do
         Enum.map(cards, &(&1.value)) 
         |> Enum.sort
     end
-
-
 end
 
 # 1  High Card: Highest value card.
