@@ -2,15 +2,24 @@ defmodule Euler054.PokerParser do
     alias Euler054.{Round}
 
     def start(text_file) do
-        player1_wins_total = 0
+        wins = %{ player1: 0, player2: 0 }
 
         text_file
         |> clean_data
-        |> get_number_of_player1_wins(player1_wins_total)
+        |> get_player_wins(wins)
+        |> display_wins
     end
 
-    defp get_number_of_player1_wins(list, player1_wins_total) do
-        Enum.map(list, &Round.create_from_text/1)
+    defp display_wins(wins) do
+        IO.puts "----------------------------"
+        IO.puts "Player 1: #{wins.player1}"
+        IO.puts "Player 2: #{wins.player2}"
+        IO.puts "----------------------------"
+    end
+
+    defp get_player_wins(list, wins) do
+        #Enum.map(list, &Round.create_from_text/1)
+        wins
     end
 
     defp clean_data(text_file) do
