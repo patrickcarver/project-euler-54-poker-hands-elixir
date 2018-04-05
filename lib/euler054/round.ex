@@ -10,6 +10,7 @@ defmodule Euler054.Round do
     end
 
     defp determine_winner(hand1, hand2) do
+        IO.inspect hand1
         :player1
     end
 end

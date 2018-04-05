@@ -1,6 +1,9 @@
 defmodule Euler054.Hand do
   def create(list) do
-    list
+    temp = Enum.map(list, &String.codepoints/1)
+    values = Enum.map(temp, &List.first/1)
+    suits = Enum.map(temp, &List.last/1)
+    {values, suits}
   end
 end
 
