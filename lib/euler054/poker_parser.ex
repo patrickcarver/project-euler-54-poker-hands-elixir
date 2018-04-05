@@ -7,18 +7,16 @@ defmodule Euler054.PokerParser do
         text_file
         |> clean_data
         |> get_player_wins(wins)
-        |> display_wins
     end
 
-    defp display_wins(wins) do
-        IO.puts "----------------------------"
-        IO.puts "Player 1: #{wins.player1}"
-        IO.puts "Player 2: #{wins.player2}"
-        IO.puts "----------------------------"
+    defp get_player_wins(list, wins) when length(list) > 0 do
+        [text_for_round | tail] = list
+        player = Round.process(text_for_round)
+        updated_wins = Map.put(wins, player, wins[player] + 1)
+        get_player_wins(tail, updated_wins)
     end
 
-    defp get_player_wins(list, wins) do
-        #Enum.map(list, &Round.create_from_text/1)
+    defp get_player_wins(list, wins) when length(list) == 0 do
         wins
     end
 

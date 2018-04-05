@@ -1,5 +1,7 @@
 defmodule Euler054.Hand do
-
+  def create(list) do
+    list
+  end
 end
 
 # 1  High Card: Highest value card.
@@ -14,3 +16,7 @@ end
 # 10 Royal Flush: Ten, Jack, Queen, King, Ace, in same suit.
 
 # straight, flush, straight flush, royal flush
+
+
+# values, suits
+# 
