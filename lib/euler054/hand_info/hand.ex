@@ -2,9 +2,15 @@ defmodule Euler054.HandInfo.Hand do
   alias Euler054.HandInfo.DataCleaner
 
   def create(list) do
-    list
+    list 
     |> DataCleaner.create_values_and_suits()
+    |> determine_if_matching
   end
+
+  defp determine_if_matching(hand) do
+    Enum.chunk_by(hand.values, &(&1))
+  end
+
 
 
 end
@@ -23,5 +29,4 @@ end
 # straight, flush, straight flush, royal flush
 
 
-# values, suits
-# 
+# one pair, two pairs, three of a kind, full house, four of a kind
