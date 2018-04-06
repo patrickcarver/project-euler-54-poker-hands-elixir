@@ -8,11 +8,42 @@ defmodule Euler054.HandInfo.Hand do
   end
 
   defp determine_if_matching(hand) do
-    Enum.chunk_by(hand.values, &(&1))
+    hand.values
+    |> chunk_and_sort
+    |> List.flatten
+    |> List.to_tuple
+    |> determine_rank
   end
 
+  def determine_rank({ first, second, third, fourth, _ }) when (first == second) and (third != fourth) do
+    :one_pair
+  end
 
+  def determine_rank({ first, second, third, fourth, _ }) when (first == second) and (third == fourth) do
+    :two_pair
+  end
 
+  def determine_rank({ first, second, third, fourth, fifth }) when first == second == third and (fourth != fifth) do
+    :three_of_a_kind
+  end  
+
+  def determine_rank({ first, second, third, fourth, fifth }) when first == second == third and (fourth == fifth) do
+    :full_house
+  end   
+
+  def determine_rank({ first, second, third, fourth, _ }) when first == second == third == fourth do
+    :four_of_a_kind
+  end
+
+  def determine_rank(_) do
+    :not_determined
+  end    
+
+  defp chunk_and_sort(values) do
+    values
+    |> Enum.chunk_by(&(&1))
+    |> Enum.sort(&(length(&1) >= length(&2)))
+  end
 end
 
 # 1  High Card: Highest value card.
