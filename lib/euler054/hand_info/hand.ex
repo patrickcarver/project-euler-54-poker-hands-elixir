@@ -1,10 +1,12 @@
-defmodule Euler054.Hand do
+defmodule Euler054.HandInfo.Hand do
+  alias Euler054.HandInfo.DataCleaner
+
   def create(list) do
-    temp = Enum.map(list, &String.codepoints/1)
-    values = Enum.map(temp, &List.first/1)
-    suits = Enum.map(temp, &List.last/1)
-    {values, suits}
+    list
+    |> DataCleaner.create_values_and_suits()
   end
+
+
 end
 
 # 1  High Card: Highest value card.
