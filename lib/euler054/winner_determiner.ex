@@ -1,5 +1,4 @@
 defmodule Euler054.WinnerDeterminer do
-  alias Euler054.HandInfo.Ranks
 
   def determine(hand1, hand2) do
     player = get_player_with_highest_rank(hand1.rank, hand2.rank)
@@ -36,31 +35,28 @@ defmodule Euler054.WinnerDeterminer do
     get_straight_winner(hand1, hand2)
   end
 
-  defp determine_winner(10, hand1, hand2) do
+  defp determine_winner(10, _, _) do
       :tie
   end
 
-  defp determine_winner(rank, hand1, hand2) do
-      :player1
+  defp get_winner(value1, value2, tie_result) do
+    cond do
+      value1 > value2 -> :player1
+      value1 < value2 -> :player2
+      value1 == value2 -> tie_result
+    end       
   end
+
 
   defp get_straight_winner(hand1, hand2) do
     card1 = List.first(hand1.values)
     card2 = List.first(hand2.values)
 
-    cond do
-        card1 > card2 -> :player1
-        card1 < card2 -> :player2
-        card1 == card2 -> :tie
-    end    
+    get_winner(card1, card2, :tie)   
   end
 
   defp get_three_of_a_kind_winner(value1, value2) do
-    cond do
-      value1 > value2 -> :player1
-      value1 < value2 -> :player2
-      value1 == value1 -> :tie
-    end    
+    get_winner(value1, value2, :tie)
   end
 
   defp get_two_pair_winner(hand1, hand2) do
@@ -74,25 +70,21 @@ defmodule Euler054.WinnerDeterminer do
   end
 
   defp get_one_pair_winner(hand1, hand2) do
-      cond do
-          hand1.value > hand2.value -> :player1
-          hand1.value < hand2.value -> :player2
-          hand1.value == hand2.value -> get_high_card_winner(hand1.remainders, hand2.remainders)
-      end
+    tie_result = get_high_card_winner(hand1.remainders, hand2.remainders)
+
+    get_winner(hand1.value, hand2.value, tie_result)
   end
 
   defp get_high_card_winner(value1, value2) when length(value1) > 0 do
      [player1_card | player1_tail] = value1
      [player2_card | player2_tail] = value2
 
-     cond do
-         player1_card > player2_card -> :player1
-         player1_card < player2_card -> :player2
-         player1_card == player2_card -> get_high_card_winner(player1_tail, player2_tail)
-     end
+     tie_result = get_high_card_winner(player1_tail, player2_tail)
+
+     get_winner(player1_card, player2_card, tie_result)
   end
 
-  defp get_high_card_winner(value1, value2) when length(value1) == 0 do
+  defp get_high_card_winner(value1, value2) when length(value1) == 0 and length(value2) == 0 do
       :tie
   end
 
