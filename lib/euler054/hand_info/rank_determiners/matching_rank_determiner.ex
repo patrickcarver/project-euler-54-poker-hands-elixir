@@ -54,9 +54,6 @@ defmodule Euler054.HandInfo.RankDeterminers.MatchingRankDeterminer do
   end
 
   defp determine_rank(_) do
-    %{
-      rank: Ranks.not_determined()
-    }
-
+    %{ rank: Ranks.not_determined() }
   end
 end
