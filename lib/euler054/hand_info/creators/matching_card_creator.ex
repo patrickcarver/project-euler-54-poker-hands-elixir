@@ -1,16 +1,16 @@
-defmodule Euler054.HandInfo.RankDeterminers.MatchingRankDeterminer do
+defmodule Euler054.HandInfo.Creators.MatchingCardCreator do
   alias Euler054.HandInfo.Ranks
 
-  def determine(values) do
+  def create(values) do
     values
     |> Enum.chunk_by(& &1)
     |> Enum.sort(&(length(&1) >= length(&2)))
     |> List.flatten()
     |> List.to_tuple()
-    |> determine_rank
+    |> create_hand
   end
 
-  defp determine_rank({first, second, third, fourth, fifth})
+  defp create_hand({first, second, third, fourth, fifth})
        when first == second and second != third and third != fourth do
     %{
       rank: Ranks.one_pair(),
@@ -19,7 +19,7 @@ defmodule Euler054.HandInfo.RankDeterminers.MatchingRankDeterminer do
     }
   end
 
-  defp determine_rank({first, second, third, fourth, fifth})
+  defp create_hand({first, second, third, fourth, fifth})
        when first == second and second != third and third == fourth do
     %{
       rank: Ranks.two_pair(),
@@ -28,7 +28,7 @@ defmodule Euler054.HandInfo.RankDeterminers.MatchingRankDeterminer do
     }
   end
 
-  defp determine_rank({first, second, third, fourth, fifth})
+  defp create_hand({first, second, third, fourth, fifth})
        when first == second and second == third and third != fourth and fourth != fifth do
     %{
       rank: Ranks.three_of_a_kind(),
@@ -37,7 +37,7 @@ defmodule Euler054.HandInfo.RankDeterminers.MatchingRankDeterminer do
     }
   end
 
-  defp determine_rank({first, second, third, fourth, fifth})
+  defp create_hand({first, second, third, fourth, fifth})
        when first == second and second == third and third != fourth and fourth == fifth do
     %{
       rank: Ranks.full_house(),
@@ -45,7 +45,7 @@ defmodule Euler054.HandInfo.RankDeterminers.MatchingRankDeterminer do
     }
   end
 
-  defp determine_rank({first, second, third, fourth, fifth})
+  defp create_hand({first, second, third, fourth, fifth})
        when first == second and second == third and third == fourth do
     %{
       rank: Ranks.four_of_a_kind(),
@@ -53,7 +53,7 @@ defmodule Euler054.HandInfo.RankDeterminers.MatchingRankDeterminer do
     }
   end
 
-  defp determine_rank(_) do
+  defp create_hand(_) do
     %{ rank: Ranks.not_determined() }
   end
 end
