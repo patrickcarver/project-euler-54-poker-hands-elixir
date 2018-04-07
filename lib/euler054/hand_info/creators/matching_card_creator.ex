@@ -45,7 +45,7 @@ defmodule Euler054.HandInfo.Creators.MatchingCardCreator do
     }
   end
 
-  defp create_hand({first, second, third, fourth, fifth})
+  defp create_hand({first, second, third, fourth, _})
        when first == second and second == third and third == fourth do
     %{
       rank: Ranks.four_of_a_kind(),

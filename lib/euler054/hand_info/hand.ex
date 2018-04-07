@@ -1,5 +1,5 @@
 defmodule Euler054.HandInfo.Hand do
-  alias Euler054.HandInfo.{DataCleaner, Ranks}
+  alias Euler054.HandInfo.DataCleaner
   alias Euler054.HandInfo.Creators.{MatchingCardCreator, StraightOrFlushCreator, HighCardCreator}
 
   def create(list) do
