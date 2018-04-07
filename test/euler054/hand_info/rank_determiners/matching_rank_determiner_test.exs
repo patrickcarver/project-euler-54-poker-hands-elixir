@@ -1,29 +1,30 @@
 defmodule Euler054.HandInfo.RankDeterminers.MatchingRankDeterminerTest do
   use ExUnit.Case
   alias Euler054.HandInfo.RankDeterminers.MatchingRankDeterminer
+  alias Euler054.HandInfo.Ranks
 
-  test "hand rank is one pair" do
-    rank = MatchingRankDeterminer.determine([5, 5, 3, 4, 2])
-    assert rank == :one_pair
+  test "hand is one pair" do
+    hand = MatchingRankDeterminer.determine([5, 5, 3, 4, 2])
+    assert hand == %{ rank: Ranks.one_pair(), value: 5, remainders: [3, 4, 2] }
   end
 
-  test "hand rank is two pair" do
-    rank = MatchingRankDeterminer.determine([5, 5, 4, 4, 2])
-    assert rank == :two_pair
+  test "hand is two pair" do
+    hand = MatchingRankDeterminer.determine([5, 5, 4, 4, 2])
+    assert hand == %{ rank: Ranks.two_pair(), values: [5, 4], remainders: 2 }
   end
 
-  test "hand rank is three of a kind" do
-    rank = MatchingRankDeterminer.determine([7, 7, 7, 3, 2])
-    assert rank == :three_of_a_kind
+  test "hand is three of a kind" do
+    hand = MatchingRankDeterminer.determine([7, 7, 7, 3, 2])
+    assert hand == %{ rank: Ranks.three_of_a_kind(), value: 7, remainders: [3, 2] } 
   end
 
-  test "hand rank is four of a kind" do
-    rank = MatchingRankDeterminer.determine([7, 7, 7, 7, 2])
-    assert rank == :four_of_a_kind
+  test "hand is four of a kind" do
+    hand = MatchingRankDeterminer.determine([7, 7, 7, 7, 2])
+    assert hand == %{ rank: Ranks.four_of_a_kind(), value: 7 }
   end
 
-  test "hank rank is a full house" do
-    rank = MatchingRankDeterminer.determine([7, 7, 7, 2, 2])
-    assert rank == :full_house
+  test "hand is a full house" do
+    hand = MatchingRankDeterminer.determine([7, 7, 7, 2, 2])
+    assert hand == %{ rank: Ranks.full_house(), values: [7, 2] }
   end
 end

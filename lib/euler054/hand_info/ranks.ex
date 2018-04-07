@@ -1,4 +1,4 @@
-defmodule Euler054.Ranks do
+defmodule Euler054.HandInfo.Ranks do
   def not_determined() do
     0
   end

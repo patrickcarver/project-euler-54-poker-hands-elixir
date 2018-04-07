@@ -1,4 +1,6 @@
 defmodule Euler054.HandInfo.RankDeterminers.MatchingRankDeterminer do
+  alias Euler054.HandInfo.Ranks
+
   def determine(values) do
     values
     |> Enum.chunk_by(& &1)
@@ -8,32 +10,53 @@ defmodule Euler054.HandInfo.RankDeterminers.MatchingRankDeterminer do
     |> determine_rank
   end
 
-  defp determine_rank({first, second, third, fourth, _})
+  defp determine_rank({first, second, third, fourth, fifth})
        when first == second and second != third and third != fourth do
-    :one_pair
+    %{
+      rank: Ranks.one_pair(),
+      value: first,
+      remainders: [third, fourth, fifth] 
+    }
   end
 
-  defp determine_rank({first, second, third, fourth, _})
+  defp determine_rank({first, second, third, fourth, fifth})
        when first == second and second != third and third == fourth do
-    :two_pair
+    %{
+      rank: Ranks.two_pair(),
+      values: [first, third],
+      remainders: fifth
+    }
   end
 
   defp determine_rank({first, second, third, fourth, fifth})
        when first == second and second == third and third != fourth and fourth != fifth do
-    :three_of_a_kind
+    %{
+      rank: Ranks.three_of_a_kind(),
+      value: first,
+      remainders: [fourth, fifth]
+    }
   end
 
   defp determine_rank({first, second, third, fourth, fifth})
        when first == second and second == third and third != fourth and fourth == fifth do
-    :full_house
+    %{
+      rank: Ranks.full_house(),
+      values: [first, fourth]
+    }
   end
 
-  defp determine_rank({first, second, third, fourth, _})
+  defp determine_rank({first, second, third, fourth, fifth})
        when first == second and second == third and third == fourth do
-    :four_of_a_kind
+    %{
+      rank: Ranks.four_of_a_kind(),
+      value: first
+    }
   end
 
   defp determine_rank(_) do
-    :not_determined
+    %{
+      rank: Ranks.not_determined()
+    }
+
   end
 end
