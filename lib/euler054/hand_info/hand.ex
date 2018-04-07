@@ -1,7 +1,7 @@
 defmodule Euler054.HandInfo.Hand do
   alias Euler054.HandInfo.DataCleaner
   alias Euler054.HandInfo.RankDeterminers.MatchingRankDeterminer
-  alias Euler054.HandInfo.Creator.StraightOrFlushCreator
+  alias Euler054.HandInfo.Creators.StraightOrFlushCreator
 
   def create(list) do
     hand_data = DataCleaner.create_values_and_suits(list)
@@ -10,14 +10,6 @@ defmodule Euler054.HandInfo.Hand do
     straight_or_flush_hand = StraightOrFlushCreator.create(hand_data)
 
     matching_hand
-  end
-
-  defp determine_if_matching(hand) do
-    hand.values
-    |> chunk_and_sort
-    |> List.flatten()
-    |> List.to_tuple()
-    |> determine_rank
   end
 end
 
