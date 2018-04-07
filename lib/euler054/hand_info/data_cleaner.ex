@@ -1,20 +1,20 @@
 defmodule Euler054.HandInfo.DataCleaner do
   def create_values_and_suits(list) do
     temp = Enum.map(list, &String.codepoints/1)
-    values = clean_values(temp) 
+    values = clean_values(temp)
     suits = clean_suits(temp)
 
-    %{ values: values, suits: suits }      
+    %{values: values, suits: suits}
   end
 
   defp clean_suits(list) do
-    Enum.map(list, &List.last/1)      
+    Enum.map(list, &List.last/1)
   end
 
-  defp clean_values(list) do             
+  defp clean_values(list) do
     Enum.map(list, &List.first/1)
     |> Enum.map(&clean_value/1)
-    |> Enum.sort(&(&1 >= &2))    
+    |> Enum.sort(&(&1 >= &2))
   end
 
   defp clean_value(value) do
