@@ -16,7 +16,7 @@ defmodule Euler054.WinnerDeterminer do
     determine_winner(rank, hand1, hand2)
   end
 
-  defp determine_winner(1, hand1, hand2) do
+  defp determine_winner(rank, hand1, hand2) when rank in [1, 6] do
      get_high_card_winner(hand1.values, hand2.values) 
   end
 
@@ -28,27 +28,11 @@ defmodule Euler054.WinnerDeterminer do
     get_two_pair_winner(hand1, hand2)
   end
 
-  defp determine_winner(4, hand1, hand2) do
+  defp determine_winner(rank, hand1, hand2) when rank in [4, 7, 8] do
     get_three_of_a_kind_winner(hand1, hand2)
   end
 
-  defp determine_winner(5, hand1, hand2) do
-    get_straight_winner(hand1, hand2)
-  end
-
-  defp determine_winner(6, hand1, hand2) do
-    get_high_card_winner(hand1.values, hand2.values)
-  end
-
-  defp determine_winner(7, hand1, hand2) do
-    get_three_of_a_kind_winner(hand1, hand2)
-  end
-
-  defp determine_winner(8, hand1, hand2) do
-    get_three_of_a_kind_winner(hand1, hand2)
-  end
-
-  defp determine_winner(9, hand1, hand2) do
+  defp determine_winner(rank, hand1, hand2) when rank in [5, 9] do
     get_straight_winner(hand1, hand2)
   end
 
