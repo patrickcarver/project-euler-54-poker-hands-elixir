@@ -1,5 +1,4 @@
 defmodule Euler054.Round do
-  alias __MODULE__
   alias Euler054.HandInfo.Hand
 
   def process(text) do
@@ -11,6 +10,8 @@ defmodule Euler054.Round do
 
   defp determine_winner(hand1, hand2) do
     IO.inspect(hand1)
+    IO.inspect "---------------------------"
+    IO.inspect(hand2)
     :player1
   end
 end
