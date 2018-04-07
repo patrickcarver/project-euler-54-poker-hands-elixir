@@ -29,7 +29,7 @@ defmodule Euler054.WinnerDeterminer do
   end
 
   defp determine_winner(rank, hand1, hand2) when rank in [4, 7, 8] do
-    get_three_of_a_kind_winner(hand1, hand2)
+    get_three_of_a_kind_winner(hand1.value, hand2.value)
   end
 
   defp determine_winner(rank, hand1, hand2) when rank in [5, 9] do
@@ -55,11 +55,11 @@ defmodule Euler054.WinnerDeterminer do
     end    
   end
 
-  defp get_three_of_a_kind_winner(hand1, hand2) do
+  defp get_three_of_a_kind_winner(value1, value2) do
     cond do
-      hand1.value > hand2.value -> :player1
-      hand1.value < hand2.value -> :player2
-      hand1.value == hand2.value -> :tie
+      value1 > value2 -> :player1
+      value1 < value2 -> :player2
+      value1 == value1 -> :tie
     end    
   end
 
